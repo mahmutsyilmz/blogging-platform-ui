@@ -1,9 +1,9 @@
-// my-posts.component.ts
 import { Component, OnInit } from '@angular/core';
 import { PostDtoResponse, PostService } from '../../services/post.service';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-posts',
@@ -17,7 +17,7 @@ export class MyPostsComponent implements OnInit {
   errorMessage: string = '';
   loading: boolean = true;
 
-  constructor(private postService: PostService) {}
+  constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
     // Sadece tarayıcı ortamında istek yapıyoruz.
@@ -45,7 +45,6 @@ export class MyPostsComponent implements OnInit {
   }
 
   getUserIdFromToken(): string | null {
-    // Tarayıcı ortamında mı kontrol ediyoruz.
     if (typeof window === 'undefined') return null;
     const token = localStorage.getItem('token');
     if (!token) return null;
@@ -56,5 +55,21 @@ export class MyPostsComponent implements OnInit {
       console.error('Token decode error:', error);
       return null;
     }
+  }
+
+  onEditPost(postId: string): void {
+    this.router.navigate(['/posts/update', postId]);
+  }
+
+  onDeletePost(postId: string): void {
+    if (!postId) {
+      console.error('Post id is undefined');
+      return;
+    }
+    this.postService.deletePost(postId).subscribe({
+      next: (response) => {
+        this.posts = this.posts.filter(post => post.uuid !== postId);
+      }
+    });
   }
 }

@@ -3,16 +3,26 @@ import { PostDtoRequest, PostDtoResponse, PostService } from '../../services/pos
 import { Router, RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
-import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon'; 
+import { jwtDecode } from 'jwt-decode';
 
+
+// jwt-payload.model.ts
+export interface MyJwtPayload {
+  sub: string;
+  userId: string;
+  iat: number;
+  exp: number;
+  role: { authority: string }[];
+}
 
 
 
 @Component({
   selector: 'app-all-posts',
   standalone: true,
-  imports: [MatCardModule, CommonModule,MatButtonModule,MatIconModule],
+  imports: [MatCardModule, CommonModule, MatButtonModule, MatIconModule],
   templateUrl: './all-posts.component.html',
   styleUrl: './all-posts.component.css'
 })
@@ -21,6 +31,7 @@ export class AllPostsComponent implements OnInit {
   loading: boolean = true;
   errorMessage: string | null = null;
   username: string = '';
+  isAdmin: boolean = false;
 
   constructor(private postService: PostService, private router: Router) {}
 
@@ -30,10 +41,17 @@ export class AllPostsComponent implements OnInit {
         next: (data) => {
           this.posts = data;
           
-          const storedUsername = localStorage.getItem('username');
-                    
-          this.username = storedUsername || '';
-          this.loading = false;
+          
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername) {
+      this.username = storedUsername;
+    }
+    const token = localStorage.getItem('token');
+    if (token) {
+        const payload = jwtDecode<MyJwtPayload>(token);
+        // role alanı bir dizi, bu yüzden admin olup olmadığını kontrol etmek için some() kullanıyoruz.
+        this.isAdmin = payload.role.some(r => r.authority === 'ROLE_ADMIN');
+    }
 
         },
         error: (err) => {
@@ -54,5 +72,15 @@ export class AllPostsComponent implements OnInit {
     this.router.navigate(['/posts/my']);
   }
 
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    // Logout sonrası login sayfasına yönlendir.
+    this.router.navigate(['/login']);
+  }
+
+  goToPendingRequests(): void {
+    this.router.navigate(['/admin']);
+  }
 
 }

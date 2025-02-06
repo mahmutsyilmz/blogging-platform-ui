@@ -2,7 +2,9 @@
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
     <div>
       <button mat-raised-button color="primary" (click)="goToAddPost()" style="margin-right: 10px;">Add Post</button>
-      <button mat-raised-button color="accent" (click)="goToMyPosts()">My Posts</button>
+      <button mat-raised-button color="accent" (click)="goToMyPosts()" style="margin-right: 10px;">My Posts</button>
+      <button mat-raised-button color="warn" (click)="logout()" style="margin-right: 10px;">Logout</button>
+      <button mat-raised-button color="" *ngIf="isAdmin" (click)="goToPendingRequests()" style="margin-right: 10px;">Pending Requests</button>
     </div>
     <div>Welcome {{username}}</div>
     <h2 style="margin: 0;">All Posts</h2>

@@ -1,0 +1,29 @@
+<div style="max-width: 600px; margin: auto; padding: 20px;">
+    <h2>Update Post</h2>
+    <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" placeholder="Enter post title" />
+        <mat-error *ngIf="postForm.get('title')?.hasError('required')">
+          Title is required.
+        </mat-error>
+      </mat-form-field>
+    
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Content</mat-label>
+        <textarea matInput formControlName="content" placeholder="Enter post content"></textarea>
+        <mat-error *ngIf="postForm.get('content')?.hasError('required')">
+          Content is required.
+        </mat-error>
+      </mat-form-field>
+    
+      <button mat-raised-button color="primary" type="submit" [disabled]="postForm.invalid">
+        Update Post
+      </button>
+    
+      <div *ngIf="errorMessage" style="color: red; margin-top: 10px;">
+        {{ errorMessage }}
+      </div>
+    </form>
+  </div>
+  
