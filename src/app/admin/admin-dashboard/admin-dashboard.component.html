@@ -1,0 +1,59 @@
+<div class="dashboard-container">
+  <h2 class="dashboard-title">Admin Dashboard</h2>
+  
+  <!-- Özet istatistikler (opsiyonel) -->
+  <div class="stats-container" *ngIf="dashboard">
+    <mat-card class="stat-card">
+      <mat-card-title>Total Users</mat-card-title>
+      <mat-card-content>
+        <h3>{{ dashboard.userCount }}</h3>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="stat-card">
+      <mat-card-title>Total Posts</mat-card-title>
+      <mat-card-content>
+        <h3>{{ dashboard.postCount }}</h3>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="stat-card">
+      <mat-card-title>Total Likes</mat-card-title>
+      <mat-card-content>
+        <h3>{{ dashboard.likeCount }}</h3>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  <mat-grid-list cols="2" rowHeight="150px" gutterSize="20px" class="admin-grid">
+    <mat-grid-tile>
+      <mat-card class="admin-card" (click)="goToPendingRequests()">
+        <mat-card-header>
+          <mat-card-title>Pending Requests</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Review and approve or reject pending post requests.</p>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card class="admin-card" (click)="goToUsers()">
+        <mat-card-header>
+          <mat-card-title>User Management</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>View and manage all registered users.</p>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+    <!-- İsterseniz başka yönetim alanları için ek grid tile ekleyin -->
+  </mat-grid-list>
+</div>
+
+<ng-template #loadingTemplate>
+  <div class="loading">
+    <p>Loading dashboard...</p>
+  </div>
+</ng-template>
+
+<div *ngIf="errorMessage" class="error">
+  <p>{{ errorMessage }}</p>
+</div>

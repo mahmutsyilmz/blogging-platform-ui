@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { PostDtoResponse, PostService } from '../../services/post.service';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
+
 import { Router } from '@angular/router';
+import { MatCardActions, MatCardContent, MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-my-posts',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatIconModule],
+  imports: [CommonModule,MatCardActions,MatCardContent,MatCardModule,MatIconModule],
   templateUrl: './my-posts.component.html',
   styleUrls: ['./my-posts.component.css']
 })

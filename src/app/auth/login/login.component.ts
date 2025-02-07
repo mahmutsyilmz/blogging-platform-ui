@@ -53,6 +53,7 @@ export class LoginComponent {
         next: (response) => {
           localStorage.setItem('token', response.token);
           localStorage.setItem('username', loginData.username);
+          this.authService.setAuthState(true);
           // Token'ı decode ederek admin rolünü kontrol ediyoruz
           try {
             const decoded: JwtPayload = jwtDecode(response.token);

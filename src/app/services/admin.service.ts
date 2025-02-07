@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { UUID } from 'crypto';
 import { response } from 'express';
 import { map, Observable } from 'rxjs';
+import { DashboardDto } from '../models/dashboard-dto.model';
 
 export interface ApiResponse<T> {
   createdDate: string;
@@ -24,6 +25,19 @@ export interface PostRequestDtoResponse {
   createdDate: string;
   requestStatus: RequestStatus;
   requestType: RequestType;
+}
+
+export interface UserDtoResponse {
+  uuid: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  createdDate: string;
+  role: string;
+  bio: string;
+  postCount: number;
+  likeCount: number;
 }
 
 @Injectable({
@@ -54,6 +68,18 @@ export class AdminService {
         map(response => response.data)
       );
   }
+
+  getAllUsers(): Observable<UserDtoResponse[]> {
+    return this.http
+      .get<ApiResponse<UserDtoResponse[]>>(`${this.baseUrl}/admin/users`)
+      .pipe(map(response => response.data));
+  }
+
+  getDashboard(): Observable<ApiResponse<DashboardDto>> {
+    return this.http.get<ApiResponse<DashboardDto>>(`${this.baseUrl}/admin/dashboard`);
+  }
+
+  
 
 
 }

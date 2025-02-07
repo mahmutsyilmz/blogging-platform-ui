@@ -43,12 +43,14 @@ export class RegisterComponent {
     }
     onSubmit(): void {
       if (this.registerForm.valid) {
+        localStorage.removeItem('token');
         const registerData: RegisterDtoRequest = this.registerForm.value;
         this.authService.register(registerData).subscribe({
           next: (response) => {
-            localStorage.removeItem('token');
+            
             localStorage.setItem('token', response.token);
             localStorage.setItem('username', registerData.username);
+            this.authService.setAuthState(true);
             this.router.navigate(['/']);
           },
           error: (error) => {

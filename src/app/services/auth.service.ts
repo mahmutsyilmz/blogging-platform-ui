@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { ApiResponse, PostDtoResponse } from './post.service';
 
 export interface AuthenticationDtoResponse{
@@ -26,9 +26,17 @@ export interface RegisterDtoRequest{
 })
 export class AuthService {
   private baseUrl = 'http://localhost:8080';
+  // Başlangıçta token varsa true, yoksa false
+  private authStateSubject = new BehaviorSubject<boolean>(!!localStorage.getItem('token'));
+  authState$ = this.authStateSubject.asObservable();
 
 
   constructor(private http:HttpClient) { }
+
+  // Login işlemi sonrasında çağrılacak
+  setAuthState(isLoggedIn: boolean): void {
+    this.authStateSubject.next(isLoggedIn);
+  }
 
 
   login(loginData: LoginDtoRequest): Observable<AuthenticationDtoResponse> {

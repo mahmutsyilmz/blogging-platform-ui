@@ -1,0 +1,23 @@
+.dashboard-container {
+    margin: 20px;
+    text-align: center;
+  }
+  
+  .dashboard-title {
+    margin-bottom: 20px;
+  }
+  
+  .cards-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .dashboard-card {
+    flex: 1 1 300px;
+    padding: 20px;
+  }
+  
+
+  

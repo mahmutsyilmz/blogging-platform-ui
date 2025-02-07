@@ -7,6 +7,8 @@ import { MyPostsComponent } from './posts/my-posts/my-posts.component';
 import { PendingRequestsComponent } from './admin/pending-requests/pending-requests.component';
 import { adminGuard } from './guards/admin.guard';
 import { UpdatePostComponent } from './posts/update-post/update-post.component';
+import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
+import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -15,7 +17,9 @@ export const routes: Routes = [
     { path: 'posts/add', component: AddPostComponent },
     { path: 'posts/my', component: MyPostsComponent },
     { path: 'posts/update/:postId', component: UpdatePostComponent },
-    { path: 'admin', component: PendingRequestsComponent, canActivate: [adminGuard] },
+    { path: 'admin', component: AdminDashboardComponent, canActivate: [adminGuard]  }, 
+    { path: 'admin/pending', component: PendingRequestsComponent, canActivate: [adminGuard]  },
+    { path: 'admin/users', component: AdminUsersComponent, canActivate: [adminGuard]  },
     { path: '', redirectTo: '/posts', pathMatch: 'full' },
     { path: '**', redirectTo: '/posts' },
     
