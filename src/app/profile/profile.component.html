@@ -1,0 +1,53 @@
+<div style="max-width: 600px; margin: auto; padding: 20px;">
+    <h2>Your Profile</h2>
+    <p><strong>Email:</strong> {{ profile?.email }}</p>
+
+  <div *ngIf="!profile?.emailVerified">
+    <button mat-raised-button color="primary" (click)="sendVerificationCode()">Verify Email</button>
+
+    <div *ngIf="showVerificationForm" style="margin-top: 15px;">
+      <mat-form-field appearance="fill">
+        <mat-label>Enter Verification Code</mat-label>
+        <input matInput [(ngModel)]="verificationCode">
+      </mat-form-field>
+      <button mat-raised-button color="accent" (click)="verifyEmail()">Submit Code</button>
+    </div>
+  </div>
+    
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" placeholder="Username" />
+      </mat-form-field>
+    
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" placeholder="Email" />
+      </mat-form-field>
+
+    
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" placeholder="First Name" />
+      </mat-form-field>
+    
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" placeholder="Last Name" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Bio</mat-label>
+        <input matInput formControlName="bio" placeholder="Bio" />
+      </mat-form-field>
+
+
+    
+      <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid">
+        Update Profile
+      </button>
+      
+      
+    </form>
+  </div>
+  

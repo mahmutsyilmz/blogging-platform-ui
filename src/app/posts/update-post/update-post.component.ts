@@ -11,8 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
   selector: 'app-update-post',
   standalone: true,
   imports: [CommonModule, MatFormFieldModule, MatInputModule, MatButtonModule, ReactiveFormsModule],
-  templateUrl: './update-post.component.html',
-  styleUrls: ['./update-post.component.css']
+  templateUrl: './update-post.component.html'
 })
 export class UpdatePostComponent implements OnInit {
   postForm: FormGroup;
@@ -26,8 +25,8 @@ export class UpdatePostComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.postForm = this.fb.group({
-      title: ['', Validators.required],
-      content: ['', Validators.required]
+      title: [''],
+      content: ['']
     });
   }
 

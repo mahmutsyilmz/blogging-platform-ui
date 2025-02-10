@@ -7,8 +7,7 @@ import { MatCardModule } from '@angular/material/card';
   selector: 'app-admin-users',
   standalone: true,
   imports: [CommonModule, MatCardModule],
-  templateUrl: './admin-users.component.html',
-  styleUrls: ['./admin-users.component.css']
+  templateUrl: './admin-users.component.html'
 })
 export class AdminUsersComponent implements OnInit {
   users: UserDtoResponse[] = [];

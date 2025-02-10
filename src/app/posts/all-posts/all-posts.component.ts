@@ -19,14 +19,11 @@ interface JwtPayload {
   selector: 'app-all-posts',
   standalone: true,
   imports: [MatCardModule, CommonModule, MatButtonModule, MatIconModule],
-  templateUrl: './all-posts.component.html',
-  styleUrls: ['./all-posts.component.css']
+  templateUrl: './all-posts.component.html'
 })
 
 export class AllPostsComponent implements OnInit {
   posts: PostDtoResponse[] = [];
-  loading: boolean = true;
-  errorMessage: string | null = null;
   username: string = '';
   isAdmin: boolean = false;
   likeCounts: { [postUuid: string]: number } = {};
@@ -61,20 +58,13 @@ export class AllPostsComponent implements OnInit {
       this.postService.getAllPosts().subscribe({
         next: (data) => {
           this.posts = data;
-          this.loading = false;
           // Her post için beğeni sayısını ve liked status'ini yükleyelim
           this.posts.forEach(post => {
             this.loadLikeCount(post.uuid);
             this.loadLikedStatus(post.uuid);
           });
-        },
-        error: (err) => {
-          this.errorMessage = err.error?.exception?.message;
-          this.loading = false;
         }
       });
-    } else {
-      this.loading = false;
     }
   }
 
@@ -83,9 +73,6 @@ export class AllPostsComponent implements OnInit {
     this.likeService.getLikeCount(postUuid).subscribe({
       next: (count: number) => {
         this.likeCounts[postUuid] = count;
-      },
-      error: (err) => {
-        console.error('Failed to load like count for post', postUuid, err);
       }
     });
   }
@@ -95,9 +82,6 @@ export class AllPostsComponent implements OnInit {
       next: (usernames: string[]) => {
         // Eğer beğenen kullanıcılar arasında mevcut username varsa, likedPosts true olsun.
         this.likedPosts[postUuid] = usernames.includes(this.username);
-      },
-      error: (err) => {
-        console.error('Failed to load liked status for post', postUuid, err);
       }
     });
   }
@@ -107,23 +91,17 @@ export class AllPostsComponent implements OnInit {
     if (!this.likedPosts[postUuid]) {
       // Eğer post beğenilmemişse beğeni ekle
       this.likeService.likePost(request).subscribe({
-        next: (res) => {
+        next: () => {
           this.likedPosts[postUuid] = true;
           this.likeCounts[postUuid] = (this.likeCounts[postUuid] || 0) + 1;
-        },
-        error: (err) => {
-          console.error('Like operation failed', err);
         }
       });
     } else {
       // Zaten beğenilmişse beğeniyi kaldır
       this.likeService.unlikePost(request).subscribe({
-        next: (res) => {
+        next: () => {
           this.likedPosts[postUuid] = false;
           this.likeCounts[postUuid] = Math.max((this.likeCounts[postUuid] || 1) - 1, 0);
-        },
-        error: (err) => {
-          console.error('Unlike operation failed', err);
         }
       });
     }
