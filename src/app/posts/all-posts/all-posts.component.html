@@ -1,36 +1,32 @@
-<div style="margin: 20px;">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-    <div>
-      <button mat-raised-button color="primary" (click)="goToAddPost()" style="margin-right: 10px;">Add Post</button>
-      <button mat-raised-button color="accent" (click)="goToMyPosts()">My Posts</button>
-    </div>
-    <div>Welcome {{username}}</div>
-    <h2 style="margin: 0;">All Posts</h2>
-  </div>
+<div class="posts-container" style="margin: 20px;">
 
-  
-  <div class="posts-grid">
-    <mat-card *ngFor="let post of posts" style="margin-bottom: 20px;"> 
-      
+  <div *ngIf="!loading && posts.length > 0" style="display: flex; flex-wrap: wrap; justify-content: flex-start;"> 
+    <mat-card *ngFor="let post of posts" style="margin-bottom: 20px; width: 30%; margin-right: 20px;"> 
       <mat-card-header>
         <mat-card-title>{{ post.title }}</mat-card-title>
-        <mat-card-subtitle>Author: {{ post.username }} - {{ post.createdDate | date }}</mat-card-subtitle> 
+        <mat-card-subtitle>
+            Author: {{ post.username }} - {{ post.createdDate | date:'dd/MM/yyyy HH:mm' }}
+        </mat-card-subtitle>
       </mat-card-header>
 
-      <mat-card-content style="margin-top: 15px;"> 
-        {{ post.content }} 
+      <mat-card-content style="margin-top: 15px;">
+        <p>{{ post.content }}</p>
       </mat-card-content>
 
-      
-      <mat-card-actions align="end" style="padding-top: 15px;"> 
-        <button mat-icon-button color="primary">
-          <mat-icon>thumb_up</mat-icon> 
+      <mat-card-actions style="display: flex; align-items: center; justify-content: flex-end;">
+        <button mat-icon-button color="primary" (click)="onLike(post.uuid)">
+          <mat-icon>{{ likedPosts[post.uuid] ? 'thumb_down' : 'thumb_up' }}</mat-icon>
         </button>
+        <span style="margin-right: 10px;">{{ likeCounts[post.uuid] || 0 }}</span>
         <button mat-icon-button color="accent">
-          <mat-icon>comment</mat-icon> 
+          <mat-icon>comment</mat-icon>
         </button>
       </mat-card-actions>
-
     </mat-card>
+  </div>
+
+  <!-- Eğer post listesi boşsa -->
+  <div *ngIf="!loading && posts.length === 0" style="text-align: center;">
+    <p>No posts available.</p>
   </div>
 </div>

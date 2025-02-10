@@ -1,0 +1,20 @@
+<mat-toolbar color="primary">
+    <span>My Blog</span>
+    
+    <div class="nav-buttons">
+      <ng-container *ngIf="!isLoggedIn">
+        <a mat-button routerLink="/login">Login</a>
+        <a mat-button routerLink="/register">Register</a>
+      </ng-container>
+  
+      <ng-container *ngIf="isLoggedIn">
+        <a mat-button routerLink="/posts">Home</a>
+        <a mat-button routerLink="/posts/add">Add Post</a>
+        <a mat-button routerLink="/posts/my">My Posts</a>
+        <a mat-button *ngIf="isAdmin" routerLink="/admin">ADMIN</a>
+        <button mat-button (click)="logout()">Logout</button>
+        <span style="margin-left: auto;">Welcome {{ username }}</span>
+      </ng-container>
+    </div>
+  </mat-toolbar>
+  
