@@ -7,6 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon'; 
 import { LikeDtoRequest, LikeService } from '../../services/like.service';
 import { jwtDecode } from 'jwt-decode';
+import { LikedUsersDialogComponent } from '../../liked-users-dialog/liked-users-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 interface JwtPayload {
   sub: string;
@@ -32,7 +34,8 @@ export class AllPostsComponent implements OnInit {
   constructor(
     private postService: PostService,
     private router: Router,
-    private likeService: LikeService
+    private likeService: LikeService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -107,6 +110,16 @@ export class AllPostsComponent implements OnInit {
     }
   }
 
+  openLikedUsers(postUuid: string): void {
+    this.likeService.getLikedUsernames(postUuid).subscribe({
+      next: (usernames: string[]) => {
+        this.dialog.open(LikedUsersDialogComponent, {
+          data: { usernames }
+        });
+      }
+    });
+  }
+
   goToAddPost(): void {
     this.router.navigate(['/posts/add']);
   }
@@ -124,4 +137,9 @@ export class AllPostsComponent implements OnInit {
   goToPendingRequests(): void {
     this.router.navigate(['/admin']);
   }
+
+  goToPostDetail(postUuid: string): void {
+    this.router.navigate(['/posts', postUuid]);
+  }
+  
 }

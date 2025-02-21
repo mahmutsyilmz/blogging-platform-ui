@@ -1,0 +1,14 @@
+.log-viewer-container {
+    max-width: 1000px;
+    margin: auto;
+  }
+  
+  .log-card {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f5f5f5;
+    font-family: monospace;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+  

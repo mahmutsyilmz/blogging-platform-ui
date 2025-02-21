@@ -1,7 +1,7 @@
 <div class="posts-container" style="margin: 20px;">
 
     <div *ngIf="posts.length > 0" style="display: flex; flex-wrap: wrap; justify-content: flex-start;"> 
-      <mat-card *ngFor="let post of posts" style="margin-bottom: 20px; width: 30%; margin-right: 20px;"> 
+      <mat-card *ngFor="let post of posts" style="margin-bottom: 20px; width: 30%; margin-right: 20px;" (click)="goToPostDetail(post.uuid)"> 
         <mat-card-header>
           <mat-card-title>{{ post.title }}</mat-card-title>
           <mat-card-subtitle>
@@ -10,15 +10,19 @@
         </mat-card-header>
   
         <mat-card-content style="margin-top: 15px;">
-          <p>{{ post.content }}</p>
+          <p>{{ post.content.substring(0,60) }}...</p>
         </mat-card-content>
   
         <mat-card-actions style="display: flex; align-items: center; justify-content: flex-end;">
-          <button mat-icon-button color="primary" (click)="onLike(post.uuid)">
+          <button mat-icon-button color="primary" (click)="onLike(post.uuid); $event.stopPropagation()">
             <mat-icon>{{ likedPosts[post.uuid] ? 'thumb_down' : 'thumb_up' }}</mat-icon>
           </button>
           <span style="margin-right: 10px;">{{ likeCounts[post.uuid] || 0 }}</span>
         </mat-card-actions>
+        <!-- "View Likes" butonu -->
+        <button mat-button color="accent" (click)="openLikedUsers(post.uuid); $event.stopPropagation()">
+          View Likes
+        </button>
       </mat-card>
     </div>
   
