@@ -5,7 +5,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { jwtDecode } from 'jwt-decode';
 import { Subscription } from 'rxjs';
-import { AuthService } from '../services/auth.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { UserService } from '../services/user.service';
 
 interface JwtPayload {
   sub: string;
@@ -21,7 +23,9 @@ interface JwtPayload {
     CommonModule,
     RouterModule,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule
   ],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
@@ -32,11 +36,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
   username = '';
   private authSub!: Subscription;
 
-  constructor(private authService: AuthService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    // AuthService üzerinden dinamik olarak durumu dinle
-    this.authSub = this.authService.authState$.subscribe(isLogged => {
+    // AuthService üzerinden dinamik olarak durumu dinliyoruz
+    this.authSub = this.userService.authState$.subscribe(isLogged => {
       this.isLoggedIn = isLogged;
       if (isLogged) {
         const token = localStorage.getItem('token');
@@ -65,7 +69,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
-    this.authService.setAuthState(false);
+    this.userService.setAuthState(false);
     window.location.href = '/login';
   }
 }

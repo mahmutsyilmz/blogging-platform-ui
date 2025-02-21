@@ -10,8 +10,7 @@ import { AdminService, PostRequestDtoResponse } from '../../services/admin.servi
   selector: 'app-pending-requests',
   standalone: true,
   imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule],
-  templateUrl: './pending-requests.component.html',
-  styleUrls: ['./pending-requests.component.css']
+  templateUrl: './pending-requests.component.html'
 })
 export class PendingRequestsComponent implements OnInit {
   pendingRequests: PostRequestDtoResponse[] = [];

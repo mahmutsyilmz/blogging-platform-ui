@@ -11,12 +11,10 @@ import { MatButtonModule } from '@angular/material/button';
   selector: 'app-add-post',
   standalone: true,
   imports: [CommonModule,MatButtonModule,MatInputModule,MatFormFieldModule,ReactiveFormsModule],
-  templateUrl: './add-post.component.html',
-  styleUrl: './add-post.component.css'
+  templateUrl: './add-post.component.html'
 })
 export class AddPostComponent {
   postForm: FormGroup;
-  errorMessage: string = "";
 
   constructor(
     private fb: FormBuilder,
@@ -24,8 +22,8 @@ export class AddPostComponent {
     private router: Router
   ) {
     this.postForm = this.fb.group({
-      title: ['', Validators.required],
-      content: ['', Validators.required]
+      title: [''],
+      content: ['']
     });
   }
 
@@ -34,13 +32,10 @@ export class AddPostComponent {
     if (this.postForm.valid) {
       const postData: PostDtoRequest = this.postForm.value;
       this.postService.createPost(postData).subscribe({
-        next: (response) => {
+        next: () => {
           // Başarılı eklemeden sonra tüm postların listelendiği sayfaya yönlendir.
           this.router.navigate(['/posts']);
-        },
-        error: (error) => {
-          console.error("Post creation failure", error);
-           }  
+        }
       });
     }
   }

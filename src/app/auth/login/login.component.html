@@ -4,17 +4,11 @@
       <mat-form-field appearance="fill" style="width: 100%;">
         <mat-label>Username</mat-label>
         <input matInput formControlName="username" placeholder="Enter you username." />
-        <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
-          Username cannot be empty.
-        </mat-error>
       </mat-form-field>
   
       <mat-form-field appearance="fill" style="width: 100%;">
         <mat-label>Password</mat-label>
         <input matInput formControlName="password" placeholder="Enter yout password." type="password" />
-        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
-            Password cannot be empty.
-        </mat-error>
       </mat-form-field>
   
       <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">

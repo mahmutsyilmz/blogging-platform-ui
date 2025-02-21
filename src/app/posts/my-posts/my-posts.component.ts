@@ -10,13 +10,10 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'app-my-posts',
   standalone: true,
   imports: [CommonModule,MatCardActions,MatCardContent,MatCardModule,MatIconModule],
-  templateUrl: './my-posts.component.html',
-  styleUrls: ['./my-posts.component.css']
+  templateUrl: './my-posts.component.html'
 })
 export class MyPostsComponent implements OnInit {
   posts: PostDtoResponse[] = [];
-  errorMessage: string = '';
-  loading: boolean = true;
 
   constructor(private postService: PostService, private router: Router) {}
 
@@ -28,20 +25,9 @@ export class MyPostsComponent implements OnInit {
         this.postService.getMyPosts(userId).subscribe({
           next: (data) => {
             this.posts = data;
-            this.loading = false;
-          },
-          error: (err) => {
-            this.errorMessage = err.error?.exception?.message;
-            console.error("Post loading failure: ", err);
-            this.loading = false;
           }
         });
-      } else {
-        this.errorMessage = 'User information not found';
-        this.loading = false;
       }
-    } else {
-      this.loading = false;
     }
   }
 
@@ -53,7 +39,6 @@ export class MyPostsComponent implements OnInit {
       const payload = JSON.parse(atob(token.split('.')[1]));
       return payload.userId || null;
     } catch (error) {
-      console.error('Token decode error:', error);
       return null;
     }
   }
@@ -63,10 +48,6 @@ export class MyPostsComponent implements OnInit {
   }
 
   onDeletePost(postId: string): void {
-    if (!postId) {
-      console.error('Post id is undefined');
-      return;
-    }
     this.postService.deletePost(postId).subscribe({
       next: (response) => {
         this.posts = this.posts.filter(post => post.uuid !== postId);

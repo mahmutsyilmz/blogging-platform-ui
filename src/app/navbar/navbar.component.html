@@ -13,6 +13,13 @@
         <a mat-button routerLink="/posts/my">My Posts</a>
         <a mat-button *ngIf="isAdmin" routerLink="/admin">ADMIN</a>
         <button mat-button (click)="logout()">Logout</button>
+
+        <!-- Profil simgesi ve menüsü -->
+      <button mat-icon-button routerLink="/profile">
+        <mat-icon>person</mat-icon>
+      </button>
+      
+
         <span style="margin-left: auto;">Welcome {{ username }}</span>
       </ng-container>
     </div>

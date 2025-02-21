@@ -36,6 +36,7 @@ export interface UserDtoResponse {
   createdDate: string;
   role: string;
   bio: string;
+  emailVerified: boolean;
   postCount: number;
   likeCount: number;
 }

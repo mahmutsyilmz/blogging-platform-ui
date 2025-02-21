@@ -1,7 +1,6 @@
 <div class="dashboard-container">
   <h2 class="dashboard-title">Admin Dashboard</h2>
   
-  <!-- Özet istatistikler (opsiyonel) -->
   <div class="stats-container" *ngIf="dashboard">
     <mat-card class="stat-card">
       <mat-card-title>Total Users</mat-card-title>
@@ -44,16 +43,6 @@
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
-    <!-- İsterseniz başka yönetim alanları için ek grid tile ekleyin -->
   </mat-grid-list>
 </div>
 
-<ng-template #loadingTemplate>
-  <div class="loading">
-    <p>Loading dashboard...</p>
-  </div>
-</ng-template>
-
-<div *ngIf="errorMessage" class="error">
-  <p>{{ errorMessage }}</p>
-</div>
