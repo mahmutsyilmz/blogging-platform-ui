@@ -40,6 +40,10 @@ export class AdminDashboardComponent implements OnInit {
   goToUsers(): void {
     this.router.navigate(['/admin/users']);
   }
+
+  goToActionLogs(): void {
+    this.router.navigate(['/admin/logs/action']);
+  }
   
   
 }

@@ -1,0 +1,19 @@
+<div class="log-viewer-container" style="padding: 20px;">
+    <h2 style="text-align: center;">User Action Logs</h2>
+    
+    <div *ngIf="loading" style="text-align: center; margin-top: 20px;">
+      <p>Loading logs...</p>
+    </div>
+    
+    <mat-card *ngIf="!loading && !errorMessage" class="log-card">
+      <div *ngFor="let log of logs" style="margin-bottom: 10px;">
+        <p><strong>{{ log.username }}</strong> - {{ log.action }} at {{ log.timestamp | date:'dd/MM/yyyy HH:mm' }}</p>
+        <hr>
+      </div>
+    </mat-card>
+    
+    <div *ngIf="!loading && errorMessage" style="color: red; text-align: center; margin-top: 20px;">
+      <p>{{ errorMessage }}</p>
+    </div>
+  </div>
+  

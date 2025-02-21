@@ -4,6 +4,7 @@ import { UUID } from 'crypto';
 import { response } from 'express';
 import { map, Observable } from 'rxjs';
 import { DashboardDto } from '../models/dashboard-dto.model';
+import { UserActionLogDtoResponse } from '../models/user-action-log-dto-response.model';
 
 export interface ApiResponse<T> {
   createdDate: string;
@@ -78,6 +79,10 @@ export class AdminService {
 
   getDashboard(): Observable<ApiResponse<DashboardDto>> {
     return this.http.get<ApiResponse<DashboardDto>>(`${this.baseUrl}/admin/dashboard`);
+  }
+
+  getActionLogs(): Observable<ApiResponse<UserActionLogDtoResponse[]>> {
+    return this.http.get<ApiResponse<UserActionLogDtoResponse[]>>(`${this.baseUrl}/admin/actionLogs`);
   }
 
   

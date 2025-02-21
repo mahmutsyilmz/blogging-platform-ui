@@ -1,0 +1,24 @@
+.post-detail-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+  }
+  
+  .loading, .error {
+    text-align: center;
+    padding: 20px;
+  }
+
+  
+mat-card-content p {
+  white-space: normal;
+  word-wrap: break-word; 
+  word-break: break-all; 
+}
+
+.post-content p {
+  white-space: pre-wrap;
+}
+
+
+  
