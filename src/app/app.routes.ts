@@ -12,19 +12,20 @@ import { MyPostsComponent } from './posts/my-posts/my-posts.component';
 import { UpdatePostComponent } from './posts/update-post/update-post.component';
 import { LogViewerComponent } from './admin/log-viewer/log-viewer.component';
 import { PostDetailComponent } from './posts/post-detail/post-detail.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'posts', component: AllPostsComponent },
-    { path: 'posts/add', component: AddPostComponent },
-    { path: 'posts/my', component: MyPostsComponent },
-    { path: 'posts/:postUuid', component: PostDetailComponent },
-    { path: 'posts/update/:postId', component: UpdatePostComponent },
-    { path: 'admin', component: AdminDashboardComponent, canActivate: [adminGuard]  }, 
-    { path: 'admin/pending', component: PendingRequestsComponent, canActivate: [adminGuard]  },
-    { path: 'admin/users', component: AdminUsersComponent, canActivate: [adminGuard]  },
-    { path: 'admin/logs/:logType', component: LogViewerComponent, canActivate: [adminGuard]  },
+    { path: 'posts', component: AllPostsComponent, canActivate: [authGuard] },
+    { path: 'posts/add', component: AddPostComponent, canActivate: [authGuard] },
+    { path: 'posts/my', component: MyPostsComponent, canActivate: [authGuard] },
+    { path: 'posts/:postUuid', component: PostDetailComponent, canActivate: [authGuard] },
+    { path: 'posts/update/:postId', component: UpdatePostComponent, canActivate: [authGuard] },
+    { path: 'admin', component: AdminDashboardComponent, canActivate: [adminGuard,authGuard]  }, 
+    { path: 'admin/pending', component: PendingRequestsComponent, canActivate: [adminGuard,authGuard]  },
+    { path: 'admin/users', component: AdminUsersComponent, canActivate: [adminGuard,authGuard]  },
+    { path: 'admin/logs/:logType', component: LogViewerComponent, canActivate: [adminGuard,authGuard]  },
     { path: 'profile', component: ProfileComponent },
     { path: '', redirectTo: '/posts', pathMatch: 'full' },
     { path: '**', redirectTo: '/posts' },

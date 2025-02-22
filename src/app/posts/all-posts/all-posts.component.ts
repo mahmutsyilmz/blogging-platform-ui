@@ -9,6 +9,8 @@ import { LikeDtoRequest, LikeService } from '../../services/like.service';
 import { jwtDecode } from 'jwt-decode';
 import { LikedUsersDialogComponent } from '../../liked-users-dialog/liked-users-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SummaryDialogComponent } from '../../summary-dialog/summary-dialog.component';
+import { AiService } from '../../services/ai.service';
 
 interface JwtPayload {
   sub: string;
@@ -35,7 +37,8 @@ export class AllPostsComponent implements OnInit {
     private postService: PostService,
     private router: Router,
     private likeService: LikeService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private aiService: AiService
   ) {}
 
   ngOnInit(): void {
@@ -115,6 +118,16 @@ export class AllPostsComponent implements OnInit {
       next: (usernames: string[]) => {
         this.dialog.open(LikedUsersDialogComponent, {
           data: { usernames }
+        });
+      }
+    });
+  }
+
+  openSummary(post: PostDtoResponse): void {
+    this.aiService.summarizePost(post.content).subscribe({
+      next: (summary: string) => {
+        this.dialog.open(SummaryDialogComponent, {
+          data: { summary }
         });
       }
     });
