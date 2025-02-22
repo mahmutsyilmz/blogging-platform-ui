@@ -23,6 +23,9 @@
         <button mat-button color="accent" (click)="openLikedUsers(post.uuid); $event.stopPropagation()">
           View Likes
         </button>
+        <button mat-button color="warn" (click)="openSummary(post); $event.stopPropagation()">
+          Summarize
+        </button>
       </mat-card>
     </div>
   
