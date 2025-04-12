@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://blogging-backend.onrender.com' // <- kendi backend URL’in buraya
+    apiUrl: 'hhttps://blogging-platform-oypj.onrender.com/'
   };
   
