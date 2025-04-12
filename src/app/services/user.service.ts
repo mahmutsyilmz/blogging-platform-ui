@@ -8,13 +8,14 @@ import { UpdateUserDtoRequest } from '../models/update-user-dto-request.model';
 import { LoginDtoRequest } from '../models/login-dto-request.model';
 import { AuthenticationDtoResponse } from '../models/authentication-dto-response.model';
 import { RegisterDtoRequest } from '../models/register-dto.model';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = 'http://localhost:8080';
+  private baseUrl = environment.apiUrl;
   private authStateSubject = new BehaviorSubject<boolean>(!!localStorage.getItem('token'));
     authState$ = this.authStateSubject.asObservable();
 

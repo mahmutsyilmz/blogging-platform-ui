@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { ApiResponse } from './admin.service';
+import { environment } from '../../environments/environment';
 
 
 
@@ -9,7 +10,7 @@ import { ApiResponse } from './admin.service';
   providedIn: 'root'
 })
 export class AiService {
-  private baseUrl = 'http://localhost:8080';
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 

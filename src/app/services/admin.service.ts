@@ -5,6 +5,7 @@ import { response } from 'express';
 import { map, Observable } from 'rxjs';
 import { DashboardDto } from '../models/dashboard-dto.model';
 import { UserActionLogDtoResponse } from '../models/user-action-log-dto-response.model';
+import { environment } from '../../environments/environment';
 
 export interface ApiResponse<T> {
   createdDate: string;
@@ -46,7 +47,7 @@ export interface UserDtoResponse {
   providedIn: 'root'
 })
 export class AdminService {
-  private baseUrl = 'http://localhost:8080';
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
